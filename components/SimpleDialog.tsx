@@ -35,10 +35,11 @@ export function SimpleDialog(props: SimpleDialogProps) {
                 onSubmit: (event: React.FormEvent<HTMLFormElement>) => {
                     event.preventDefault();
                     const formData = new FormData(event.currentTarget);
-                    const formJson = Object.fromEntries((formData as any).entries());
+                    const formJson = Object.fromEntries((formData).entries());
                     const pixels = formJson.pixels;
                     console.log(pixels);
-                    onPixelSelect(pixels);
+
+                    onPixelSelect(Number(pixels));
                 },
             }}
         >
