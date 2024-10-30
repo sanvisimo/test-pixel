@@ -1,10 +1,11 @@
 'use client'
 
 import Image from "next/image";
-import {useState} from "react";
+import {useMemo, useState} from "react";
 
 export default function Home() {
   const [pixels, setPixels] = useState<number>(1100)
+  const pixelArray = useMemo(() => Array.from({length: pixels}, (_, i) => i), [pixels])
 
   const handleClick =(pixel = 1 )=> {
     setPixels(prevPixels => prevPixels === 1000*1000 ? prevPixels : prevPixels + pixel)
@@ -34,7 +35,7 @@ export default function Home() {
         </div>
         <div>
           <div style={{width: 1000, height: 1000, position: 'relative', border: "1px solid red"}}>
-            {Array.from(Array(pixels).keys().map(pixel => {
+            {pixelArray.map(pixel => {
                 const row = Math.ceil(pixel / 1000) -1;
               const col = (pixel % 999);
 
@@ -48,7 +49,7 @@ export default function Home() {
                      }
                 }
                 />)
-            }))}
+            })}
             <Image
                 src="/pixel_test.png"
                 alt="Example Image"
