@@ -6,8 +6,6 @@ import {
      TextField
 } from "@mui/material";
 
-
-
 export interface SimpleDialogProps {
     open: boolean;
     onClose: (pixels: number) => void;

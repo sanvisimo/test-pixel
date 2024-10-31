@@ -1,80 +1,81 @@
 'use client'
 
 import Image from "next/image";
-import { useState} from "react";
+import {useMemo, useState} from "react";
 import {SimpleDialog} from "@/components/SimpleDialog";
+import Countdown from "react-countdown";
+import {spiralMatrix} from "@/lib/utils";
 
-function getRandomIndex(usedIndexs: number[], maxIndex: number) {
-  const min = 0;
-  const max = maxIndex - 1;
-  let index = Math.floor(Math.random()*(max-min+1)+min);
-
-  return usedIndexs.includes(index) ? index++ : index
-}
+const DEFAULT_DIMENSION = 10
 
 export default function Home() {
   const [open, setOpen] = useState(false);
-  const [pixels, setPixels] = useState<number[]>([])
+  const [currentPixel, setCurrentPixel] = useState(10)
+  const matrix = useMemo(() => spiralMatrix(1000 / DEFAULT_DIMENSION), [])
+  const used = useMemo(() => {
+    const colors: Array<Array<number>> = []
+
+    for (let y = 0; y <matrix.length; y++) {
+        for(let x =0; x <matrix[y].length; x++) {
+          if (matrix[y][x] <= currentPixel) {
+            colors.push([y,x])
+          }
+        }
+    }
+
+      return colors
+  },[matrix,currentPixel])
 
   const handleClickOpen = () => {
     setOpen(true);
   };
 
-  const generateNumbers = async (numbers: number) => {
-    let p = [...pixels]
-      for(let i = 0; i < numbers; i++) {
-      console.log('p', p)
-      const index = getRandomIndex(p, 1000000);
-      p = [...p, index];
-    }
-
-      setPixels(p)
-  }
-
   const handleClose = (numbers: number) => {
     setOpen(false);
-    console.log('pixels', numbers)
-    generateNumbers(numbers)
+    setCurrentPixel(current => current + numbers)
   };
-
-  console.log('poixe', pixels)
 
   return (
     <div className="grid grid-rows-[20px_1fr_20px] justify-items-center min-h-screen p-8 font-[family-name:var(--font-geist-sans)]">
       <main className="flex  gap-8 row-start-2 items-center sm:items-start">
         <div className="flex flex-col gap-8">
-        <h1 className="text-5xl">Cancel wokiness!</h1>
-        <div className="flex">
-          <button type="button"
-                  onClick={handleClickOpen}
-                  className="text-gray-900 bg-gradient-to-r from-lime-200 via-lime-400 to-lime-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-lime-300 dark:focus:ring-lime-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
-            Buy pixels
-          </button>
-          <SimpleDialog
-              open={open}
-              onClose={handleClose}
-          />
-        </div>
+          <h1 className="text-5xl bg-gradient-to-r from-red-500 via-white to-blue-500 inline-block text-transparent bg-clip-text">LET’S
+            MAKE THEM GO AWAY!</h1>
+          <Countdown date={new Date("2024-11-05")}/>
+          <Image width={300} height={169}
+               src="/usa-american-flag.gif"
+               className="attachment-medium size-medium" alt="U.S.A."/>
+          <div className="flex">
+            <button type="button"
+                    onClick={handleClickOpen}
+                    className="text-gray-900 bg-gradient-to-r from-lime-200 via-lime-400 to-lime-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-lime-300 dark:focus:ring-lime-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
+              Buy pixels
+            </button>
+            <SimpleDialog
+                open={open}
+                onClose={handleClose}
+            />
+          </div>
         </div>
         <div>
           <div style={{width: 1000, height: 1000, position: 'relative', border: "1px solid red"}}>
-            {pixels.map(pixel => {
-                const row = Math.ceil(pixel / 1000) -1;
-              const col = (pixel % 999);
+            {used.map(pixel => {
+              const row = (pixel[0]*DEFAULT_DIMENSION) + 1
+              const col = (pixel[1]*DEFAULT_DIMENSION) + 1
 
-              return (<div key={pixel}
+              return (<div key={`position-${pixel[0]}-${pixel[1]}`}
                            style={{
                              position: 'absolute',
                        top: row,
                        left: col,
-                       width: 1, height: 1,
-                       background: "#000"
+                       width: DEFAULT_DIMENSION, height: DEFAULT_DIMENSION,
+                       background: "#1A00FF"
                      }
                 }
                 />)
             })}
             <Image
-                src="/digital_woke.webp"
+                src="/kamala-harris-and-joe-biden-as-a-married-couple.webp"
                 alt="Example Image"
                 width={1000}
                 height={1000}
