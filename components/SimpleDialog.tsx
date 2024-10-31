@@ -28,8 +28,6 @@ export function SimpleDialog(props: SimpleDialogProps) {
         onClose(quantity);
     };
 
-    console.log('quan', quantity)
-
     return (
         <Dialog
             open={open}

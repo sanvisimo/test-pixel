@@ -26,7 +26,6 @@ export const updatePixel = async (number: number) => {
 
 
 export const createOrder = async (number: number) => {
-    console.log('quanti crea', number)
     const response = await fetch("https://qzygh4aijl.execute-api.eu-west-1.amazonaws.com/prod/orders", {
         method: "POST",
         headers: {

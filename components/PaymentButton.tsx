@@ -1,5 +1,5 @@
 import {PayPalButtons, PayPalScriptProvider} from "@paypal/react-paypal-js";
-import {useCallback, useState} from "react";
+import {useCallback} from "react";
 import {captureOrder, createOrder} from "@/lib/actions";
 
 type PaymentButtonProps = {
@@ -8,10 +8,6 @@ type PaymentButtonProps = {
 }
 
 export const PaymentButton = ({ pixels, onSuccess }: PaymentButtonProps) => {
-    const [message, setMessage] = useState("");
-
-    console.log('nel bittt', pixels)
-
     const initialOptions = {
         "client-id":
             "ASvfUROsebD5HgxQqZXs-f0YQ9-AmIi1E6Y7d_GLRHeUoppidhmDRIRtjLBnytO2X_AzugC2eJ0UKOqH",
@@ -28,7 +24,6 @@ export const PaymentButton = ({ pixels, onSuccess }: PaymentButtonProps) => {
 
     const handleOrder =useCallback(async () => {
         try {
-            console.log('fesa', pixels)
             const orderData = await createOrder(pixels)
 
             if (orderData.id) {
@@ -43,9 +38,9 @@ export const PaymentButton = ({ pixels, onSuccess }: PaymentButtonProps) => {
             }
         } catch (error) {
             console.error(error);
-            setMessage(
-                `Could not initiate PayPal Checkout...${error}`
-            );
+            // setMessage(
+            //     `Could not initiate PayPal Checkout...${error}`
+            // );
         }
     }, [pixels])
 
@@ -80,12 +75,12 @@ export const PaymentButton = ({ pixels, onSuccess }: PaymentButtonProps) => {
                 } else {
                     // (3) Successful transaction -> Show confirmation or thank you message
                     // Or go to another URL:  actions.redirect('thank_you.html');
-                    const transaction =
-                        orderData.purchase_units[0].payments
-                            .captures[0];
-                    setMessage(
-                        `Transaction ${transaction.status}: ${transaction.id}. See console for all available details`
-                    );
+                    // const transaction =
+                    //     orderData.purchase_units[0].payments
+                    //         .captures[0];
+                    // setMessage(
+                    //     `Transaction ${transaction.status}: ${transaction.id}. See console for all available details`
+                    // );
                     console.log(
                         "Capture result",
                         orderData,
@@ -95,9 +90,9 @@ export const PaymentButton = ({ pixels, onSuccess }: PaymentButtonProps) => {
                 }
             } catch (error) {
                 console.error(error);
-                setMessage(
-                    `Sorry, your transaction could not be processed...${error}`
-                );
+                // setMessage(
+                //     `Sorry, your transaction could not be processed...${error}`
+                // );
             }
         }}
     />
