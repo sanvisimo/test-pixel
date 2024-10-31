@@ -20,8 +20,6 @@ export default function Home() {
   });
   const [currentPixel, setCurrentPixel] = useState(0);
 
-  console.log("size", width, height);
-
   useEffect(() => {
     const updateViews = async () => {
       const updatedViews = await getpixels();
