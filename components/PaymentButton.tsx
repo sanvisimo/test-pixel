@@ -16,7 +16,7 @@ export const PaymentButton = ({ pixels, onSuccess }: PaymentButtonProps) => {
         "enable-funding": "venmo",
         "disable-funding": "",
         "buyer-country": "IT",
-        currency: "EUR",
+        currency: "USD",
         "data-page-type": "product-details",
         components: "buttons",
         "data-sdk-integration-source": "developer-studio",

@@ -36,11 +36,10 @@ export function SimpleDialog(props: SimpleDialogProps) {
                 component: 'form',
             }}
         >
-            <DialogTitle>Cancel woke culture!</DialogTitle>
+            <DialogTitle>ERASE THEM!</DialogTitle>
             <DialogContent>
                 <DialogContentText>
-                    To Cancel the woke please subscribe! <br />
-                    1€ for pixel
+                    cancel one pixel for just 1$z
                 </DialogContentText>
                 <TextField
                     autoFocus
