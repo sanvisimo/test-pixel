@@ -37,4 +37,3 @@ export function spiralMatrix(n: number) {
     }
     return arr;
 }
-

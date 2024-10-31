@@ -3,8 +3,9 @@
 import Image from "next/image";
 import { useMemo, useState} from "react";
 import {SimpleDialog} from "@/components/SimpleDialog";
-import Countdown from "react-countdown";
-import {spiralMatrix} from "@/lib/utils";
+import { spiralMatrix} from "@/lib/utils";
+import {updatePixel} from "@/lib/actions";
+
 
 const DEFAULT_DIMENSION = 10
 
@@ -37,31 +38,9 @@ export default function Page({dbPixel}: PageProps ) {
 
     const handleClose = async (numbers: number) => {
         setOpen(false);
-        const newPixels = currentPixel + numbers
-        const now = new Date()
-
-        try {
-            const data = await fetch(
-                "https://qzygh4aijl.execute-api.eu-west-1.amazonaws.com/prod/pixels",
-                {
-                    method: "POST",
-                    body: JSON.stringify({
-                        number: newPixels,
-                        publicationDate: now.toISOString(),
-                    }),
-                    headers: {
-                        "Content-Type": "application/json",
-                        "x-api-key": process.env.API_KEY ?? ''
-                    },
-                },
-            );
-            const posts = await data.json();
-            console.log("return", posts);
-            setCurrentPixel(newPixels)
-        } catch (error) {
-            console.log("error", error);
-        }
-
+        const total = currentPixel + numbers
+        await updatePixel(total)
+        setCurrentPixel(total)
     };
 
     return (
@@ -70,9 +49,9 @@ export default function Page({dbPixel}: PageProps ) {
                 <div className="flex flex-col gap-8">
                     <h1 className="text-5xl bg-gradient-to-r from-red-500 via-white to-blue-500 inline-block text-transparent bg-clip-text">LET’S
                         MAKE THEM GO AWAY!</h1>
-                    <Countdown date={new Date("2024-11-05")}/>
                     <Image width={300} height={169}
                            src="/usa-american-flag.gif"
+                           unoptimized
                            className="attachment-medium size-medium" alt="U.S.A."/>
                     <div className="flex">
                         <button type="button"

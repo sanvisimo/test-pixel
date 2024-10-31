@@ -1,10 +1,14 @@
 import {
-     Button,
+    Button,
     Dialog,
-    DialogActions, DialogContent, DialogContentText,
+    DialogActions,
+    DialogContent,
+    DialogContentText,
     DialogTitle,
-     TextField
+    TextField
 } from "@mui/material";
+import { useState } from "react";
+import {PaymentButton} from "@/components/PaymentButton";
 
 export interface SimpleDialogProps {
     open: boolean;
@@ -14,15 +18,17 @@ export interface SimpleDialogProps {
 
 export function SimpleDialog(props: SimpleDialogProps) {
     const { onClose,  open } = props;
+    const [quantity, setQuantity] = useState(0);
 
     const handleClose = () => {
         onClose(0);
     };
 
-    const onPixelSelect =  (pixels: number) => {
-        onClose(pixels);
+    const handleSuccess =  () => {
+        onClose(quantity);
     };
 
+    console.log('quan', quantity)
 
     return (
         <Dialog
@@ -30,15 +36,6 @@ export function SimpleDialog(props: SimpleDialogProps) {
             onClose={handleClose}
             PaperProps={{
                 component: 'form',
-                onSubmit: (event: React.FormEvent<HTMLFormElement>) => {
-                    event.preventDefault();
-                    const formData = new FormData(event.currentTarget);
-                    const formJson = Object.fromEntries((formData).entries());
-                    const pixels = formJson.pixels;
-                    console.log(pixels);
-
-                    onPixelSelect(Number(pixels));
-                },
             }}
         >
             <DialogTitle>Cancel woke culture!</DialogTitle>
@@ -53,20 +50,17 @@ export function SimpleDialog(props: SimpleDialogProps) {
                     margin="dense"
                     id="pixels"
                     name="pixels"
-                    label="pixels"
+                    label="Pixels"
                     type="number"
-                    slotProps={{
-                        inputLabel: {
-                            shrink: true,
-                        },
-                    }}
+                    value={quantity}
+                    onChange={(e) => setQuantity(Number(e.target.value))}
                     fullWidth
                     variant="standard"
                 />
             </DialogContent>
             <DialogActions>
                 <Button onClick={handleClose}>Cancel</Button>
-                <Button type="submit">Subscribe</Button>
+                {!!quantity && <PaymentButton key={quantity} pixels={quantity} onSuccess={handleSuccess} />}
             </DialogActions>
         </Dialog>
     );
