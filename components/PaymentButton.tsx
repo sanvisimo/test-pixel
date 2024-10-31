@@ -9,8 +9,8 @@ type PaymentButtonProps = {
 
 export const PaymentButton = ({ pixels, onSuccess }: PaymentButtonProps) => {
   const initialOptions = {
-    "client-id": process.env.PAYPAL_CLIENT_ID ?? "",
-    clientId: process.env.PAYPAL_CLIENT_ID ?? "",
+    "client-id": process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID ?? "",
+    clientId: process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID ?? "",
     "enable-funding": "venmo",
     "disable-funding": "",
     "buyer-country": "IT",
