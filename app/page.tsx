@@ -14,7 +14,7 @@ export default function Home() {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
-  const { width = 0, height = 0 } = useResizeObserver({
+  const { width = 0 } = useResizeObserver({
     ref,
     box: "border-box",
   });
