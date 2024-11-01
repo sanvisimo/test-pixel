@@ -66,6 +66,7 @@ export default function Home() {
           <h1 className="text-5xl bg-gradient-to-r from-red-500 via-white to-blue-500 inline-block text-transparent bg-clip-text">
             LET’S MAKE THEM GO AWAY!
           </h1>
+          <p>let’s cancel them! buy one red pixel to erase this image</p>
           <Image
             width={300}
             height={169}
@@ -100,7 +101,7 @@ export default function Home() {
                     left: col,
                     width: deflection,
                     height: deflection,
-                    background: "#1A00FF",
+                    background: "#F00",
                   }}
                 />
               );

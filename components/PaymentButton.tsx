@@ -27,6 +27,7 @@ export const PaymentButton = ({ pixels, onSuccess }: PaymentButtonProps) => {
       if (orderData.id) {
         return orderData.id;
       } else {
+        console.log("non ho loridine");
         const errorDetail = orderData?.details?.[0];
         const errorMessage = errorDetail
           ? `${errorDetail.issue} ${errorDetail.description} (${orderData.debug_id})`
@@ -35,7 +36,7 @@ export const PaymentButton = ({ pixels, onSuccess }: PaymentButtonProps) => {
         throw new Error(errorMessage);
       }
     } catch (error) {
-      console.error(error);
+      console.error("create", error);
       // setMessage(
       //     `Could not initiate PayPal Checkout...${error}`
       // );
@@ -88,7 +89,7 @@ export const PaymentButton = ({ pixels, onSuccess }: PaymentButtonProps) => {
               onSuccess();
             }
           } catch (error) {
-            console.error(error);
+            console.error("approve", error);
             // setMessage(
             //     `Sorry, your transaction could not be processed...${error}`
             // );
