@@ -17,14 +17,16 @@ export interface SimpleDialogProps {
 
 export function SimpleDialog(props: SimpleDialogProps) {
   const { onClose, open } = props;
-  const [quantity, setQuantity] = useState(0);
+  const [quantity, setQuantity] = useState("1");
 
   const handleClose = () => {
+    setQuantity("1");
     onClose(0);
   };
 
   const handleSuccess = () => {
-    onClose(quantity);
+    setQuantity("1");
+    onClose(Number(quantity));
   };
 
   return (
@@ -47,7 +49,7 @@ export function SimpleDialog(props: SimpleDialogProps) {
           label="Pixels"
           type="number"
           value={quantity}
-          onChange={(e) => setQuantity(Number(e.target.value))}
+          onChange={(e) => setQuantity(e.target.value)}
           fullWidth
           variant="standard"
         />
@@ -57,7 +59,7 @@ export function SimpleDialog(props: SimpleDialogProps) {
         {!!quantity && (
           <PaymentButton
             key={quantity}
-            pixels={quantity}
+            pixels={Number(quantity)}
             onSuccess={handleSuccess}
           />
         )}
